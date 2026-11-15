@@ -17,6 +17,23 @@
    "requires": [],
    "conflicts": [],
    "target": "1.3.0",
+   "controls": [
+    {
+     "combo": "SHIFT + PATTERN",
+     "page": "MAIN",
+     "does": "FLIPS THE STEP GRID BETWEEN TRACKS 1-4 AND TRACKS 5-8"
+    },
+    {
+     "combo": "SHIFT + KNOB",
+     "page": "MAIN",
+     "does": "WHILE TRACKS 5-8 ARE SHOWN: TURNS THAT KNOB ON TRACKS 5-8 TOGETHER"
+    },
+    {
+     "combo": "SHIFT (HOLD)",
+     "page": "MIDI CHANNELS",
+     "does": "SHOWS AND SETS THE MIDI CHANNELS OF TRACKS 5-8"
+    }
+   ],
    "memory": {
     "v1.3.0": {
      "ram": {
@@ -47,6 +64,17 @@
    "requires": [],
    "conflicts": [],
    "target": "1.3.0",
+   "controls": [
+    {
+     "combo": "ROW 3 STEP 16",
+     "page": "CONFIG",
+     "does": "TURNS THE FX SWITCH INTO FREEZE, OR BACK"
+    },
+    {
+     "combo": "FX SWITCH",
+     "does": "WHEN TURNED ON (CONFIG ROW 3 STEP 16): LONG FREEZES THE DELAY OR THE REVERB TAIL"
+    }
+   ],
    "memory": {
     "v1.3.0": {
      "ram": {
@@ -81,6 +109,13 @@
    "requires": [],
    "conflicts": [],
    "target": "1.3.0",
+   "controls": [
+    {
+     "combo": "ROW 3 STEP 15",
+     "page": "CONFIG",
+     "does": "SWITCHES THE FX BETWEEN THE BBD DELAY AND THE REVERB"
+    }
+   ],
    "memory": {
     "v1.3.0": {
      "ram": {
@@ -117,6 +152,13 @@
    "requires": [],
    "conflicts": [],
    "target": "1.3.0",
+   "controls": [
+    {
+     "combo": "ROW 3 STEP 14",
+     "page": "CONFIG",
+     "does": "TURNS PER PATTERN TEMPOS ON OR OFF"
+    }
+   ],
    "memory": {
     "v1.3.0": {
      "ram": {
@@ -143,6 +185,28 @@
    "requires": [],
    "conflicts": [],
    "target": "1.3.0",
+   "controls": [
+    {
+     "combo": "TRIGGER + LFO RATE",
+     "does": "THE HELD VOICES GET THEIR OWN LFO, AT THIS RATE"
+    },
+    {
+     "combo": "TRIGGER + LFO WAVE",
+     "does": "THE HELD VOICES GET THEIR OWN LFO, WITH THIS WAVE"
+    },
+    {
+     "combo": "TRIGGER + MOD LVL",
+     "does": "THE HELD VOICES GET THEIR OWN LFO, AT THIS LEVEL"
+    },
+    {
+     "combo": "TRIGGER + SYNC",
+     "does": "THE HELD VOICES GET THEIR OWN LFO, ITS SYNC SWITCHED"
+    },
+    {
+     "combo": "RESET + LFO RATE",
+     "does": "PUTS EVERY VOICE BACK ON THE MAIN LFO"
+    }
+   ],
    "memory": {
     "v1.3.0": {
      "ram": {
@@ -178,6 +242,36 @@
    "requires": [],
    "conflicts": [],
    "target": "1.3.0",
+   "controls": [
+    {
+     "combo": "STEP + SHUFFLE",
+     "page": "MAIN",
+     "does": "ON STEP SAMPLER TRACKS: OPENS THE SAMPLE PAGE FOR THE HELD STEPS"
+    },
+    {
+     "combo": "STEP",
+     "page": "SAMPLES",
+     "does": "CHOOSES THAT SAMPLE FOR THE HELD STEPS AND THE TRACK"
+    },
+    {
+     "combo": "CLEAR + STEP",
+     "page": "MAIN",
+     "does": "ALSO CLEARS THE STEP'S SAMPLE",
+     "adds": true
+    },
+    {
+     "combo": "STEP + REC",
+     "page": "MAIN",
+     "does": "ALSO COPIES THE STEP'S SAMPLE",
+     "adds": true
+    },
+    {
+     "combo": "STEP + SHIFT",
+     "page": "MAIN",
+     "does": "ALSO PASTES THE STEP'S SAMPLE",
+     "adds": true
+    }
+   ],
    "memory": {
     "v1.3.0": {
      "ram": {
@@ -225,6 +319,7 @@
    "requires": [],
    "conflicts": [],
    "target": "1.3.0",
+   "controls": [],
    "memory": {
     "v1.3.0": {
      "ram": {},

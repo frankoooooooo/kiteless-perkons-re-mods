@@ -7,7 +7,24 @@
       "patches": [
         "eight_lanes"
       ],
-      "code": "et"
+      "code": "et",
+      "controls": [
+        {
+          "combo": "SHIFT + PATTERN",
+          "page": "MAIN",
+          "does": "FLIPS THE STEP GRID BETWEEN TRACKS 1-4 AND TRACKS 5-8"
+        },
+        {
+          "combo": "SHIFT + KNOB",
+          "page": "MAIN",
+          "does": "WHILE TRACKS 5-8 ARE SHOWN: TURNS THAT KNOB ON TRACKS 5-8 TOGETHER"
+        },
+        {
+          "combo": "SHIFT (HOLD)",
+          "page": "MIDI CHANNELS",
+          "does": "SHOWS AND SETS THE MIDI CHANNELS OF TRACKS 5-8"
+        }
+      ]
     }
   ]
 }
