@@ -1,0 +1,33 @@
+# Unquantized
+
+The trigger keys record your hits where you played them, not snapped to the nearest step.
+
+Based on official Pērkons firmware **1.3.0**. Unofficial; not affiliated with Erica Synths.
+
+## Getting it
+
+Build Pērkons firmware with **UNQUANTIZED** ticked in the **Mod Matrix**, from your own
+official firmware 1.3.0: follow [Get modded firmware](https://github.com/kiteless/perkons-re#get-modded-firmware)
+in perkons-re. No firmware files are provided here. To remove it, flash the official
+firmware again.
+
+## Turning it on
+
+1. Hold **SHIFT** and press **MOD** to open the config menu.
+2. Press **step 13 on the third row** of step buttons. Its LED on = unquantized on.
+3. Leave the config menu as usual; the choice is saved on the SD card.
+
+## Using it
+
+Record as usual: press **REC** while the pattern plays and tap the **trigger keys**.
+
+* Each hit goes into the step that was playing when you tapped, with how late into that
+  step you tapped. It plays back there, every time round.
+* The timing is kept as a share of a step (24 positions per step, as fine as 96 PPQN), so
+  it follows tempo changes, an external clock and each track's DIVIDE / MULTIPLY.
+* A step holds one hit per track: a second hit in the same step replaces the first.
+* The timing is stored where the pattern keeps shuffle, so it's saved with the pattern and
+  the official firmware plays it the same way. Setting a track's **SHUFFLE** again puts
+  that track's steps back on the shuffle grid.
+* Steps you program with the step buttons, and notes recorded from MIDI, stay on the grid.
+* While it's off, recording snaps to the nearest step as on the factory firmware.

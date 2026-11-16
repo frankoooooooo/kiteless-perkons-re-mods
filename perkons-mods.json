@@ -182,6 +182,39 @@
    }
   },
   {
+   "id": "unquantized",
+   "dir": "unquantized",
+   "title": "UNQUANTIZED",
+   "summary": "THE TRIGGER KEYS RECORD YOUR HITS WHERE YOU PLAYED THEM, OFF THE GRID. SWITCHED ON IN THE CONFIG MENU, ROW 3 STEP 13.",
+   "readme": "unquantized/README.md",
+   "patches": [
+    "unquantized"
+   ],
+   "code": "uq",
+   "kind": "mod",
+   "requires": [],
+   "conflicts": [],
+   "target": "1.3.0",
+   "controls": [
+    {
+     "combo": "ROW 3 STEP 13",
+     "page": "CONFIG",
+     "does": "TURNS UNQUANTIZED RECORDING ON OR OFF"
+    }
+   ],
+   "memory": {
+    "v1.3.0": {
+     "ram": {
+      "store": {
+       "kiteless/perkons-re-mods:unquantized/src/m4/unquantized.c:.pk_axi": 4
+      }
+     },
+     "takeovers": {},
+     "borrows": {}
+    }
+   }
+  },
+  {
    "id": "voice-step-sampler",
    "dir": "voice-step-sampler",
    "title": "STEP SAMPLER",

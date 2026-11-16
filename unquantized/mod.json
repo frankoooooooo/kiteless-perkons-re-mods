@@ -1,0 +1,20 @@
+{
+  "options": [
+    {
+      "id": "unquantized",
+      "title": "UNQUANTIZED",
+      "summary": "THE TRIGGER KEYS RECORD YOUR HITS WHERE YOU PLAYED THEM, OFF THE GRID. SWITCHED ON IN THE CONFIG MENU, ROW 3 STEP 13.",
+      "patches": [
+        "unquantized"
+      ],
+      "code": "uq",
+      "controls": [
+        {
+          "combo": "ROW 3 STEP 13",
+          "page": "CONFIG",
+          "does": "TURNS UNQUANTIZED RECORDING ON OR OFF"
+        }
+      ]
+    }
+  ]
+}
