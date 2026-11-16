@@ -1,4 +1,4 @@
-/* unquantized: the trigger keys record where they were played, not on the nearest step.
+/* seq-unquantized: the trigger keys record where they were played, not on the nearest step.
  *
  * On (config row 3 step 13), while playing with REC on: a trigger key writes the step
  * playing now and its delay (the % of a step the step plays late, the value shuffle sets)

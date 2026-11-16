@@ -1,5 +1,5 @@
 {
-  "_comment": "unquantized: this mod's hook sites (the firmware facts they name are in the framework's symbols/v1.3.0-m4.json); loaded with them by perkons.mods",
+  "_comment": "seq-unquantized: this mod's hook sites (the firmware facts they name are in the framework's symbols/v1.3.0-m4.json); loaded with them by perkons.mods",
   "sites": {
     "uq.playing.081039ec": {
       "addr": "0x081039ec",

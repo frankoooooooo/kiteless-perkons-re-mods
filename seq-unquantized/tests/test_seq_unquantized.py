@@ -1,4 +1,4 @@
-"""unquantized: the trigger keys record the step playing and its delay, as played."""
+"""seq-unquantized: the trigger keys record the step playing and its delay, as played."""
 import os
 import sys
 import tempfile
@@ -22,7 +22,7 @@ _image = []
 
 def image():
     if not _image:
-        img, p = build_patched(Image.load(require_image('v1.3.0')), ['unquantized'], tempfile.mkdtemp())
+        img, p = build_patched(Image.load(require_image('v1.3.0')), ['seq_unquantized'], tempfile.mkdtemp())
         _image.append((img, p.cave_symbols['m4host']))
     return _image[0]
 
@@ -83,6 +83,27 @@ class Rig(M4Rig):
 
 
 class TestUnquantized(unittest.TestCase):
+    def test_config_key_led_off_quantized_on_unquantized(self):
+        """Row 3 step 13 on the config page: off at power-on (quantized, as stock), a press
+        turns it on (unquantized) with its LED lit, another press off again."""
+        r = M4Rig(*image())
+        key = 0x20 + 12
+        evt = 0x2407ff40
+
+        def press():
+            r.e.uc.mem_write(evt, bytes([key, 0x11, 0, 0, 0, 0, 0, 0]))
+            r.e.call(r.cave['pk4_cfg_event'], evt, max_insns=5_000_000)
+
+        def led():
+            r.e.call(r.cave['pk4_cfg_render'], 0, 0, 0, 0, max_insns=5_000_000)
+            return r.leds.get(key)
+
+        self.assertEqual((r.e.r8(r.cave['pk_cfg_unquantized']), led()), (0, 0))
+        press()
+        self.assertEqual((r.e.r8(r.cave['pk_cfg_unquantized']), led()), (1, 0x80))
+        press()
+        self.assertEqual((r.e.r8(r.cave['pk_cfg_unquantized']), led()), (0, 0))
+
     def test_a_hit_records_the_step_playing_and_how_late_it_was(self):
         r = Rig()
         r.start()

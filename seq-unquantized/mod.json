@@ -1,11 +1,11 @@
 {
   "options": [
     {
-      "id": "unquantized",
+      "id": "seq-unquantized",
       "title": "UNQUANTIZED",
       "summary": "THE TRIGGER KEYS RECORD YOUR HITS WHERE YOU PLAYED THEM, OFF THE GRID. SWITCHED ON IN THE CONFIG MENU, ROW 3 STEP 13.",
       "patches": [
-        "unquantized"
+        "seq_unquantized"
       ],
       "code": "uq",
       "controls": [

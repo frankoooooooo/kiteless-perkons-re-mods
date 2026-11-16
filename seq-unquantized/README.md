@@ -14,7 +14,8 @@ firmware again.
 ## Turning it on
 
 1. Hold **SHIFT** and press **MOD** to open the config menu.
-2. Press **step 13 on the third row** of step buttons. Its LED on = unquantized on.
+2. Press **step 13 on the third row** of step buttons. LED on: unquantized. LED off (as
+   it starts): recording snaps to the grid, as on the factory firmware.
 3. Leave the config menu as usual; the choice is saved on the SD card.
 
 ## Using it

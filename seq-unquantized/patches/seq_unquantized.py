@@ -1,4 +1,4 @@
-"""unquantized: the trigger keys record where they were played, off the grid (config row
+"""seq-unquantized: the trigger keys record where they were played, off the grid (config row
 3 step 13). Built by the framework's M4 host; hook sites are in
 ../symbols/<version>-m4.json (merged into the framework's symbols)."""
 import os

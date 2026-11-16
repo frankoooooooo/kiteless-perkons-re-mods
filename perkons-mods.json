@@ -182,13 +182,13 @@
    }
   },
   {
-   "id": "unquantized",
-   "dir": "unquantized",
+   "id": "seq-unquantized",
+   "dir": "seq-unquantized",
    "title": "UNQUANTIZED",
    "summary": "THE TRIGGER KEYS RECORD YOUR HITS WHERE YOU PLAYED THEM, OFF THE GRID. SWITCHED ON IN THE CONFIG MENU, ROW 3 STEP 13.",
-   "readme": "unquantized/README.md",
+   "readme": "seq-unquantized/README.md",
    "patches": [
-    "unquantized"
+    "seq_unquantized"
    ],
    "code": "uq",
    "kind": "mod",
@@ -206,7 +206,7 @@
     "v1.3.0": {
      "ram": {
       "store": {
-       "kiteless/perkons-re-mods:unquantized/src/m4/unquantized.c:.pk_axi": 4
+       "kiteless/perkons-re-mods:seq-unquantized/src/m4/unquantized.c:.pk_axi": 4
       }
      },
      "takeovers": {},
