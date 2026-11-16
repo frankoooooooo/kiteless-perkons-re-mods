@@ -4,53 +4,6 @@
  "description": "Voice engines, effects and sequencer mods for the Perkons HD-01",
  "mods": [
   {
-   "id": "eight-tracks",
-   "dir": "eight-lanes",
-   "title": "8 TRACKS",
-   "summary": "FOUR MORE SEQUENCER TRACKS, 5-8, ON A SECOND PAGE (SHIFT + PATTERN). MIDI ONLY: THEY SEND NOTES AND CCS ON THEIR OWN CHANNELS.",
-   "readme": "eight-lanes/README.md",
-   "patches": [
-    "eight_lanes"
-   ],
-   "code": "et",
-   "kind": "mod",
-   "requires": [],
-   "conflicts": [],
-   "target": "1.3.0",
-   "controls": [
-    {
-     "combo": "SHIFT + PATTERN",
-     "page": "MAIN",
-     "does": "FLIPS THE STEP GRID BETWEEN TRACKS 1-4 AND TRACKS 5-8"
-    },
-    {
-     "combo": "SHIFT + KNOB",
-     "page": "MAIN",
-     "does": "WHILE TRACKS 5-8 ARE SHOWN: TURNS THAT KNOB ON TRACKS 5-8 TOGETHER"
-    },
-    {
-     "combo": "SHIFT (HOLD)",
-     "page": "MIDI CHANNELS",
-     "does": "SHOWS AND SETS THE MIDI CHANNELS OF TRACKS 5-8"
-    }
-   ],
-   "memory": {
-    "v1.3.0": {
-     "ram": {
-      "store": {
-       "kiteless/perkons-re-mods:eight-lanes/src/m4/el_config.c:.pk_axi": 8,
-       "kiteless/perkons-re-mods:eight-lanes/src/m4/el_core.c:.pk_axi": 2360,
-       "kiteless/perkons-re-mods:eight-lanes/src/m4/el_kits.c:.pk_axi": 3136,
-       "kiteless/perkons-re-mods:eight-lanes/src/m4/el_page.c:.pk_axi": 4,
-       "kiteless/perkons-re-mods:eight-lanes/src/m4/el_patterns.c:.pk_axi": 90448
-      }
-     },
-     "takeovers": {},
-     "borrows": {}
-    }
-   }
-  },
-  {
    "id": "fx-freeze",
    "dir": "fx-freeze",
    "title": "FX FREEZE",
