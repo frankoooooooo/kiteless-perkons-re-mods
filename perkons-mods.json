@@ -185,7 +185,7 @@
    "id": "seq-unquantized",
    "dir": "seq-unquantized",
    "title": "UNQUANTIZED",
-   "summary": "THE TRIGGER KEYS RECORD YOUR HITS WHERE YOU PLAYED THEM, OFF THE GRID. SWITCHED ON IN THE CONFIG MENU, ROW 3 STEP 13.",
+   "summary": "THE TRIGGER KEYS AND MIDI NOTES RECORD YOUR HITS WHERE YOU PLAYED THEM, OFF THE GRID. SWITCHED ON IN THE CONFIG MENU, ROW 3 STEP 13.",
    "readme": "seq-unquantized/README.md",
    "patches": [
     "seq_unquantized"

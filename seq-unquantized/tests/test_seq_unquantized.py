@@ -16,6 +16,8 @@ from perkons.rig import M4Rig  # noqa: E402
 SYM = Symbols(os.path.join(PERKONS, 'symbols', 'v1.3.0-m4.json'))
 REC = SYM.g['rec_flags'] + 1
 TRIG = 0x4b                   # trigger key 1
+DC = SYM.g['device_config']
+MIDI_MSG = 0x2407fe00         # scratch for a MIDI message
 STEP_TICKS = 24
 _image = []
 
@@ -35,6 +37,9 @@ class Rig(M4Rig):
         self.e.w8(self.cave['pk_cfg_unquantized'], 1 if on else 0)
         self.sub = 0
         self.fired = []           # (step, tick) of each trigger the sequencer sent for track 1
+        # the MIDI input as the firmware sets it up at init: channels and callbacks
+        self.e.call(self.sym.fn['midi_in_init'], self.sym.g['midi_channels'], 4, self.sym.g['midi_callbacks'],
+                    max_insns=5_000_000)
 
     def tick(self):
         c = self.clock
@@ -70,12 +75,24 @@ class Rig(M4Rig):
         self.tick()
         del self.fired[n:]
 
+    def note(self, note, vel=100, ch=0):
+        """A MIDI note-on through the MIDI input (the voice plays at once, not counted in `fired`)."""
+        self.e.uc.mem_write(MIDI_MSG, bytes([0x90 | ch, note, vel, 0]))
+        self.e.call(self.sym.fn['midi_dispatch'], MIDI_MSG, max_insns=5_000_000)
+        self.e.sent(2)
+        n = len(self.fired)
+        self.tick()
+        del self.fired[n:]
+
     def rec(self, on=True):
         self.e.w8(REC, 2 if on else 0)
 
     def step_rec(self, step, track=0):
         a = self.block(track) + 8 * step
         return {'on': self.e.r8(a), 'delay': self.r16(a + 2), 'vel': self.e.r8(a + 7)}
+
+    def step_note(self, step, track=0):
+        return self.e.r8(self.block(track) + 8 * step + 6)
 
     def start(self):
         self.play()
@@ -208,6 +225,90 @@ class TestUnquantized(unittest.TestCase):
         r.hit(track=3)
         self.assertEqual(r.step_rec(9, track=3), {'on': 1, 'delay': 46, 'vel': 0x7f})
         self.assertEqual(r.step_rec(9)['on'], 0)
+
+
+class TestMidi(unittest.TestCase):
+    """MIDI notes record through the MIDI input's own path (single channel by default:
+    notes 36-39 play voices 1-4)."""
+
+    def test_a_note_records_the_step_playing_and_how_late_it_was(self):
+        for tick, delay in ((7, 30), (20, 84)):         # stock: this step / the next
+            with self.subTest(tick=tick):
+                r = Rig()
+                r.start()
+                r.rec()
+                r.to(5, tick)
+                r.note(36)
+                self.assertEqual(r.step_rec(5), {'on': 1, 'delay': delay, 'vel': 0x7f})
+                self.assertEqual(r.step_rec(6)['on'], 0)
+                r.fired.clear()
+                r.to(5, 23)
+                self.assertEqual(r.fired, [])
+                r.to(6, 0)
+                r.to(5, 23)
+                self.assertEqual(r.fired, [(5, tick)])
+
+    def test_late_note_leaves_the_next_step_as_it_was(self):
+        r = Rig()
+        a = r.block(0) + 8 * 6
+        r.e.uc.mem_write(a, bytes([1, 10, 50, 0, 0, 0, 40, 60]))     # on, (+1 as a new step), delay 50 %, note 40, velocity 60
+        r.start()
+        r.rec()
+        r.to(5, 20)
+        r.note(36)
+        self.assertEqual(bytes(r.e.uc.mem_read(a, 8)), bytes([1, 10, 50, 0, 0, 0, 40, 60]))
+        self.assertEqual(r.step_rec(5), {'on': 1, 'delay': 84, 'vel': 0x7f})
+        r.fired.clear()
+        r.to(6, 23)
+        self.assertEqual(r.fired, [(6, 12)], 'the next step still plays this pass')
+
+    def test_multi_channel_note_and_velocity(self):
+        r = Rig()
+        r.e.w8(DC + 0x1d, 1)                            # multi channel: voice n on channel n
+        r.e.w8(DC + 0x1b, 1)                            # midi-velocity
+        for v in range(4):
+            r.e.call(r.sym.fn['midi_in_channel'], v, v, max_insns=100_000)
+        r.start()
+        r.rec()
+        for step, tick in ((3, 5), (8, 18)):
+            r.to(step, tick)
+            r.note(48 + step, vel=90, ch=1)
+        for step, delay in ((3, 21), (8, 75)):
+            self.assertEqual(r.step_rec(step, track=1), {'on': 1, 'delay': delay, 'vel': 90})
+            self.assertEqual(r.step_note(step, track=1), 48 + step)
+        self.assertEqual([r.step_rec(s, track=1)['on'] for s in (4, 9)], [0, 0])
+
+    def test_the_note_picks_the_voice(self):
+        r = Rig()
+        r.start()
+        r.rec()
+        r.to(9, 22)
+        r.note(38)
+        self.assertEqual(r.step_rec(9, track=2)['delay'], 92)
+        self.assertEqual([r.step_rec(s, track=t)['on'] for t in (0, 2) for s in (9, 10)], [0, 0, 1, 0])
+
+    def test_other_notes_record_nothing(self):
+        r = Rig()
+        r.start()
+        r.rec()
+        r.to(5, 20)
+        r.note(60)
+        self.assertEqual([r.step_rec(s, track=t)['on'] for t in range(4) for s in range(16)], [0] * 64)
+
+    def test_off_is_stock(self):
+        r = Rig(on=False)
+        r.start()
+        r.rec()
+        r.to(5, 20)
+        r.note(36)
+        self.assertEqual((r.step_rec(5)['on'], r.step_rec(6)), (0, {'on': 1, 'delay': 0, 'vel': 0x7f}))
+
+    def test_without_rec_nothing_is_written(self):
+        r = Rig()
+        r.start()
+        r.to(5, 7)
+        r.note(36)
+        self.assertEqual([r.step_rec(s)['on'] for s in range(16)], [0] * 16)
 
 
 if __name__ == '__main__':
